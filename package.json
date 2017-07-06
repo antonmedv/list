@@ -1,0 +1,22 @@
+{
+  "name": "@medv/list",
+  "version": "1.0.0",
+  "description": "Immutable List in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonmedv/list.git"
+  },
+  "keywords": [
+    "immutable"
+  ],
+  "author": "Anton Medvedev <anton@medv.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antonmedv/list/issues"
+  },
+  "homepage": "https://github.com/antonmedv/list#readme"
+}

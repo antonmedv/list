@@ -11,7 +11,7 @@ const {
   length,
   reverse,
   map,
-  append,
+  concat,
   at,
   stringify,
   range,
@@ -75,10 +75,13 @@ test('map', t => {
   t.is(head(map(l, i => i * 2)), 2 * 1e6)
 })
 
-test('append', t => {
+test('concat', t => {
   const l = range(1, 5)
   const r = range(1, 5)
-  t.is(stringify(append(l, r)), '(5 4 3 2 1 5 4 3 2 1)')
+  t.is(stringify(concat(l, r)), '(5 4 3 2 1 5 4 3 2 1)')
+  const d = range(1, 1e6)
+  const f = range(1, 1e6)
+  t.is(length(concat(d, f)), 2 * 1e6)
 })
 
 test('at', t => {

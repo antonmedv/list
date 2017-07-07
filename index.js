@@ -99,8 +99,11 @@ const map = (l, fn, acc = empty) => l ? map(tail(l), fn, list(fn(head(l)), acc))
 
 /**
  * Appends right list to left list.
+ *
+ * The complexity of append is proportional to length(l), so avoid repeatedly appending to lists of arbitrary length,
+ * e.g. append(l, [item]). Instead, consider prepending via list(item | l) and then reversing.
  */
-const append = (l, r) => l ? list(head(l), append(tail(l), r)) : r
+const concat = (l, r) => foldr(l, r, (el, acc) => list(el, acc))
 
 /**
  * Finds the element at the given index (zero-based).
@@ -153,7 +156,7 @@ module.exports = {
   length,
   reverse,
   map,
-  append,
+  concat,
   at,
   stringify,
   print,

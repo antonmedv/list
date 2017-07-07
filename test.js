@@ -4,6 +4,8 @@ const {
   empty,
   head,
   tail,
+  first,
+  last,
   each,
   reduce,
   foldl,
@@ -23,16 +25,22 @@ test('list creation', t => {
   t.is(l(true), undefined)
 })
 
+test('empty list', t => {
+  t.is(empty, undefined)
+  t.is(head(empty), undefined)
+  t.is(tail(empty), undefined)
+})
+
 test('head tail', t => {
   const l = list(1, list(2))
   t.is(head(l), 1)
   t.is(head(tail(l)), 2)
 })
 
-test('empty list', t => {
-  t.is(empty, undefined)
-  t.is(head(empty), undefined)
-  t.is(tail(empty), undefined)
+test('first last', t => {
+  const l = list(1, list(2, list(3)))
+  t.is(first(l), 1)
+  t.is(last(l), 3)
 })
 
 test('each', t => {
@@ -45,8 +53,9 @@ test('each', t => {
 
 test('reduce', t => {
   const l = range(1, 1e6)
-  t.is(reduce(l, (prev, curr) => prev + curr), 500000500000)
-  t.is(reduce(l, (prev, curr) => prev + curr, 1), 500000500001)
+  t.is(reduce(l, x => x), 1e6)
+  t.is(reduce(l, (el, acc) => el + acc), 500000500000)
+  t.is(reduce(l, (el, acc) => el + acc, 1), 500000500001)
 })
 
 test('foldl', t => {
@@ -66,19 +75,18 @@ test('length', t => {
 
 test('reverse', t => {
   const l = range(1, 1e6)
-  t.is(head(l), 1e6)
-  t.is(head(reverse(l)), 1)
+  t.is(head(reverse(l)), 1e6)
 })
 
 test('map', t => {
   const l = range(1, 1e6)
-  t.is(head(map(l, i => i * 2)), 2 * 1e6)
+  t.is(last(map(l, i => i * 2)), 2 * 1e6)
 })
 
 test('concat', t => {
   const l = range(1, 5)
   const r = range(1, 5)
-  t.is(stringify(concat(l, r)), '(5 4 3 2 1 5 4 3 2 1)')
+  t.is(stringify(concat(l, r)), '(1 2 3 4 5 1 2 3 4 5)')
   const d = range(1, 1e6)
   const f = range(1, 1e6)
   t.is(length(concat(d, f)), 2 * 1e6)
@@ -86,13 +94,18 @@ test('concat', t => {
 
 test('at', t => {
   const l = range(1, 1e6)
-  t.is(at(l, 0), 1e6)
-  t.is(at(l, 100), 999900)
-  t.is(at(l, -1), 1)
+  t.is(at(l, 0), 1)
+  t.is(at(l, 100), 101)
+  t.is(at(l, -1), 1e6)
   t.is(at(l, 1e6 + 1), undefined)
 })
 
 test('stringify', t => {
   const l = range(1, 5)
-  t.is(stringify(l), '(5 4 3 2 1)')
+  t.is(stringify(l), '(1 2 3 4 5)')
+})
+
+test('range', t => {
+  const l = range(1, 5)
+  t.is(head(l), 1)
 })

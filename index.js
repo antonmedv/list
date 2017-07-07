@@ -33,6 +33,16 @@ const head = l => l && l()
 const tail = l => l && l(true)
 
 /**
+ * Returns the first element in list or undefined if list is empty.
+ */
+const first = l => head(l)
+
+/**
+ * Returns the last element in list or undefined if list is empty.
+ */
+const last = l => tail(l) ? last(tail(l)) : head(l)
+
+/**
  * Invokes the given fn for each item in the enumerable.
  */
 const each = (l, fn) => (fn(head(l)), tail(l) && each(tail(l), fn))
@@ -44,19 +54,11 @@ const each = (l, fn) => (fn(head(l)), tail(l) && each(tail(l), fn))
  * The first element of the list is used as the initial value of the accumulator.
  * If you wish to use another value for the accumulator, pass it as third argument.
  *
+ * fn receives element and accumulator.
+ *
  * Returns the accumulator.
  */
-const reduce = (l, fn, init) => {
-  let acc = init
-  each(l, el => {
-    if (acc === empty) {
-      acc = el
-    } else {
-      acc = fn(acc, el)
-    }
-  })
-  return acc
-}
+const reduce = (l, fn, init) => init ? foldl(l, init, fn) : foldl(tail(l), head(l), fn)
 
 /**
  * Folds (reduces) the given list from the left with
@@ -126,7 +128,7 @@ const obtain = (l, i) => i > 0 ? obtain(tail(l), i - 1) : head(l)
 /**
  * Converts a list to string.
  */
-const stringify = l => `(${reduce(l, (prev, curr) => `${prev} ${curr}`)})`
+const stringify = l => `(${reduce(l, (x, acc) => `${acc} ${x}`)})`
 
 /**
  * Converts a list to string and prints it to console.
@@ -141,7 +143,7 @@ const range = (from, to, step = 1) => {
   for (let i = from; i <= to; i += step) {
     l = list(i, l)
   }
-  return l
+  return reverse(l)
 }
 
 module.exports = {
@@ -149,6 +151,8 @@ module.exports = {
   empty,
   head,
   tail,
+  first,
+  last,
   each,
   reduce,
   foldl,

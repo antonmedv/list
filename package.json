@@ -4,19 +4,31 @@
   "description": "Immutable List in JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "lint": "eslint index.js",
+    "ava": "node --harmony-tailcalls node_modules/.bin/ava",
+    "test": "npm run lint; npm run ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antonmedv/list.git"
-  },
+  "files": [
+    "index.js"
+  ],
+  "repository": "antonmedv/list.git",
   "keywords": [
-    "immutable"
+    "immutable",
+    "list"
   ],
   "author": "Anton Medvedev <anton@medv.io>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/antonmedv/list/issues"
   },
-  "homepage": "https://github.com/antonmedv/list#readme"
+  "homepage": "https://github.com/antonmedv/list#readme",
+  "ava": {
+    "files": [
+      "test.js"
+    ]
+  },
+  "dependencies": {
+    "ava": "^0.20.0",
+    "eslint": "^4.1.1"
+  }
 }

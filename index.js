@@ -4,16 +4,48 @@
  *
  * Takes two arguments: head and tail.
  *
- * Head is an element to store in list, tail is another list or undefined.
+ * Head is an element to store in the list, tail is another list or undefined.
+ *
+ * Example: Creates a list of one element:
+ *
+ *   list('something')
+ *
+ * Example: Creates a list of three elements:
+ *
+ *   list(1, list(2, list(3)))
+ *
  */
 const list = (head, tail) => next => next ? tail : head
 
+/**
+ * Represents the empty list as undefined.
+ */
 const empty = void 0
+
+/**
+ * Returns the head of a list or undefined if the list is empty.
+ */
 const head = l => l && l()
+
+/**
+ * Returns the tail of a list or undefined if the list is empty.
+ */
 const tail = l => l && l(true)
 
+/**
+ * Invokes the given fn for each item in the enumerable.
+ */
 const each = (l, fn) => (fn(head(l)), tail(l) && each(tail(l), fn))
 
+/**
+ * Invokes fn for each element in the list, passing that element and the accumulator as arguments.
+ * fn’s return value is stored in the accumulator.
+ *
+ * The first element of the list is used as the initial value of the accumulator.
+ * If you wish to use another value for the accumulator, pass it as third argument.
+ *
+ * Returns the accumulator.
+ */
 const reduce = (l, fn, init) => {
   let acc = init
   each(l, el => {

@@ -81,7 +81,7 @@ const foldr = (l, acc, fn) => foldl(reverse(l), acc, fn)
  *
  * Second param is an accumulator and should be omitted.
  */
-const length = (l, count = 0) => l ? length(l && l(true), count + 1) : count
+const length = (l, count = 0) => l ? length(tail(l), count + 1) : count
 
 /**
  * Returns a list of elements in enumerable in reverse order.

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Immutable List in JavaScript",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "lint": "eslint index.js",
     "ava": "node --harmony-tailcalls node_modules/.bin/ava",

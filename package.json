@@ -10,7 +10,8 @@
     "test": "npm run lint; npm run ava"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "repository": "antonmedv/list.git",
   "keywords": [

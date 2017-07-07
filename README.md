@@ -12,6 +12,9 @@ npm install @medv/list
 
 ## Usage
 
+This implementation requires tail call optimization which now available only in [Safari](https://kangax.github.io/compat-table/es6/#test-proper_tail_calls_(tail_call_optimisation)) 
+and in [node](http://node.green/#ES2015-optimisation-proper-tail-calls--tail-call-optimisation-) only with `--harmony-tailcalls` flag.
+
 ```js
 const {list, reverse, print} = require('@medv/list')
 

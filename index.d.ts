@@ -7,6 +7,8 @@ export const list: <T>(head: T, tail?: List<T>) => List<T>
 export const empty: List<undefined>
 export const head: <T>(l: List<T>) => T
 export const tail: <T>(l: List<T>) => List<T>
+export const first: <T>(l: List<T>) => T
+export const last: <T>(l: List<T>) => T
 export const each: <T>(l: List<T>, fn: (T) => void) => List<T>
 export const reduce: <T, K>(l: List<T>, fn: <K>(acc: K, el: T) => K, acc?: K) => K
 export const foldl: <T, K>(l: List<T>, acc: K, fn: <K>(acc: K, el: T) => K) => K

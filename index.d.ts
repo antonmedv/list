@@ -14,7 +14,7 @@ export const foldr: <T, K>(l: List<T>, acc: K, fn: <K>(acc: K, el: T) => K) => K
 export const length: <T>(l: List<T>) => number
 export const reverse: <T>(l: List<T>) => List<T>
 export const map: <T, K>(l: List<T>, fn: (el: T) => K) => List<K>
-export const append: <T, K>(l: List<T>, r: List<K>) => List<T | K>
+export const concat: <T, K>(l: List<T>, r: List<K>) => List<T | K>
 export const at: <T>(l: List<T>, i: number) => T
 export const stringify: <T>(l: List<T>) => string
 export const print: <T>(l: List<T>) => void

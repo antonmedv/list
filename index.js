@@ -45,7 +45,7 @@ const last = l => tail(l) ? last(tail(l)) : head(l)
 /**
  * Invokes the given fn for each item in the enumerable.
  */
-const each = (l, fn) => (fn(head(l)), tail(l) && each(tail(l), fn))
+const each = (l, fn) => l && (fn(head(l)), each(tail(l), fn))
 
 /**
  * Invokes fn for each element in the list, passing that element and the accumulator as arguments.
@@ -83,21 +83,21 @@ const foldr = (l, acc, fn) => foldl(reverse(l), acc, fn)
  *
  * Second param is an accumulator and should be omitted.
  */
-const length = (l, count = 0) => l ? length(tail(l), count + 1) : count
+const length = l => foldl(l, 0, (_, acc) => acc + 1)
 
 /**
  * Returns a list of elements in enumerable in reverse order.
  *
  * Second param is an accumulator and should be omitted.
  */
-const reverse = (l, acc = empty) => l ? reverse(tail(l), list(head(l), acc)) : acc
+const reverse = l => foldl(l, empty, (el, acc) => list(el, acc))
 
 /**
  * Returns a list where each item is the result of invoking fn on each corresponding item of list.
  *
  * Third param is an accumulator and should be omitted.
  */
-const map = (l, fn, acc = empty) => l ? map(tail(l), fn, list(fn(head(l)), acc)) : reverse(acc)
+const map = (l, fn) => foldl(reverse(l), empty, (el, acc) => list(fn(el), acc))
 
 /**
  * Appends right list to left list.

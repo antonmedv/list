@@ -1,6 +1,6 @@
 export interface List<T> {
   (): T
-  (tail: true): List<T>
+  (next: true): List<T>
 }
 
 export const list: <T>(head: T, tail?: List<T>) => List<T>

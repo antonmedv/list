@@ -6,7 +6,7 @@
  *
  * Head is an element to store in the list, tail is another list or undefined.
  *
- * Example: Creates a list of one element:
+ * Example: Creates a list of one element (tail can be omitted):
  *
  *   list('something')
  *
@@ -80,30 +80,24 @@ const foldr = (l, acc, fn) => foldl(reverse(l), acc, fn)
 
 /**
  * Returns length of given list.
- *
- * Second param is an accumulator and should be omitted.
  */
 const length = l => foldl(l, 0, (_, acc) => acc + 1)
 
 /**
  * Returns a list of elements in enumerable in reverse order.
- *
- * Second param is an accumulator and should be omitted.
  */
 const reverse = l => foldl(l, empty, (el, acc) => list(el, acc))
 
 /**
  * Returns a list where each item is the result of invoking fn on each corresponding item of list.
- *
- * Third param is an accumulator and should be omitted.
  */
-const map = (l, fn) => foldl(reverse(l), empty, (el, acc) => list(fn(el), acc))
+const map = (l, fn) => foldr(l, empty, (el, acc) => list(fn(el), acc))
 
 /**
- * Appends right list to left list.
+ * Concatenates right list to left list.
  *
- * The complexity of append is proportional to length(l), so avoid repeatedly appending to lists of arbitrary length,
- * e.g. append(l, [item]). Instead, consider prepending via list(item | l) and then reversing.
+ * The complexity of concat is proportional to length(l), so avoid repeatedly concatenating lists of arbitrary length,
+ * e.g. concat(l, list(item)). Instead, consider prepending via list(item, l) and then reversing.
  */
 const concat = (l, r) => foldr(l, r, (el, acc) => list(el, acc))
 

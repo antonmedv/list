@@ -86,7 +86,7 @@ const length = l => foldl(l, 0, (_, acc) => acc + 1)
 /**
  * Returns a list of elements in enumerable in reverse order.
  */
-const reverse = l => foldl(l, empty, (el, acc) => list(el, acc))
+const reverse = l => foldl(l, empty, list)
 
 /**
  * Returns a list where each item is the result of invoking fn on each corresponding item of list.
@@ -99,7 +99,7 @@ const map = (l, fn) => foldr(l, empty, (el, acc) => list(fn(el), acc))
  * The complexity of concat is proportional to length(l), so avoid repeatedly concatenating lists of arbitrary length,
  * e.g. concat(l, list(item)). Instead, consider prepending via list(item, l) and then reversing.
  */
-const concat = (l, r) => foldr(l, r, (el, acc) => list(el, acc))
+const concat = (l, r) => foldr(l, r, list)
 
 /**
  * Finds the element at the given index (zero-based).
@@ -110,14 +110,14 @@ const concat = (l, r) => foldr(l, r, (el, acc) => list(el, acc))
  *
  * Note this operation takes linear time. In order to access the element, it will need to traverse previous elements.
  */
-const at = (l, i) => i < 0 ? obtain(reverse(l), (-i) - 1) : obtain(l, i)
+const at = (l, i) => i < 0 ? _obtain(reverse(l), (-i) - 1) : _obtain(l, i)
 
 /**
  * Finds the element at the given index (zero-based).
  *
  * Private func.
  */
-const obtain = (l, i) => i > 0 ? obtain(tail(l), i - 1) : head(l)
+const _obtain = (l, i) => i > 0 ? _obtain(tail(l), i - 1) : head(l)
 
 /**
  * Converts a list to string.
@@ -140,6 +140,52 @@ const range = (from, to, step = 1) => {
   return reverse(l)
 }
 
+/**
+ * Returns a list with an updated value at the specified `index`.
+ * Negative indices indicate an offset from the end of the `list`.
+ *
+ *   update(l, 0, el => el + 10)
+ *
+ *   update(l, -10, _ => 123)
+ *
+ * Note: currently update works without tco
+ */
+const update = (l, index, fn) =>
+  index === 0 ?
+    list(fn(head(l)), tail(l)) :
+    index < 0 ?
+      update(l, length(l) + index, fn) :
+      l ? list(head(l), update(tail(l), index - 1, fn)) : l
+
+/**
+ * Zips corresponding elements from each list.
+ * The zipping finishes as soon as any first list terminates.
+ *
+ *   const a = range(1, 5)
+ *   const b = range(11, 15)
+ *
+ *   zip(list(a, list(b))) // ((1 11) (2 12) (3 13) (4 14) (5 15))
+ *
+ */
+const zip = (ls, acc) => head(ls) ? zip(map(ls, tail), list(map(ls, head), acc)) : reverse(acc)
+
+/**
+ * Creates a list of two elements.
+ */
+const pair = (a, b) => list(a, list(b))
+
+/**
+ * Creates an applicative function.
+ * Takes a curry function with arity of list.
+ *
+ *    const params = list(1, list(2))
+ *    const sum = apply(a => b => a + b)
+ *
+ *    sum(params) === 3
+ *
+ */
+const apply = fn => l => foldl(tail(l), fn(head(l)), (el, acc) => acc(el))
+
 module.exports = {
   list,
   empty,
@@ -159,4 +205,8 @@ module.exports = {
   stringify,
   print,
   range,
+  update,
+  zip,
+  pair,
+  apply,
 }

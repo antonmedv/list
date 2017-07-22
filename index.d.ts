@@ -21,3 +21,7 @@ export const at: <T>(l: List<T>, i: number) => T
 export const stringify: <T>(l: List<T>) => string
 export const print: <T>(l: List<T>) => void
 export const range: (from: number, to: number, step?: number) => List<number>
+export const update: <T>(l: List<T>, index: number, fn: (el: T) => T) => List<T>
+export const zip: <T, K>(l: List<T>) => List<K>
+export const pair: <T>(a: T, b: T) => List<T>
+export const apply: <T, K>(fn: (el: T) => K) => (l: List<T>) => K

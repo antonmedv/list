@@ -17,6 +17,10 @@ const {
   at,
   stringify,
   range,
+  update,
+  zip,
+  pair,
+  apply,
 } = require('./index')
 
 test('list creation', t => {
@@ -108,4 +112,30 @@ test('stringify', t => {
 test('range', t => {
   const l = range(1, 5)
   t.is(head(l), 1)
+})
+
+test('update', t => {
+  const l = range(1, 5)
+  t.is(stringify(update(l, 0, _ => 0)), '(0 2 3 4 5)')
+  t.is(stringify(update(l, -1, _ => 0)), '(1 2 3 4 0)')
+  t.is(stringify(update(l, 2, el => el * 3)), '(1 2 9 4 5)')
+})
+
+test('zip', t => {
+  const a = range(1, 5)
+  const b = range(11, 15)
+  const z = zip(list(a, list(b)))
+  t.is(stringify(map(z, stringify)), '((1 11) (2 12) (3 13) (4 14) (5 15))')
+  const l = range(1, 1e6)
+  t.is(length(zip(list(l, list(l)))), 1e6)
+})
+
+test('pair', t => {
+  t.is(stringify(pair(1, 2)), '(1 2)')
+})
+
+test('apply', t => {
+  const params = list(1, list(2, list(3)))
+  const sum = apply(a => b => c => a + b + c)
+  t.is(sum(params), 6)
 })
